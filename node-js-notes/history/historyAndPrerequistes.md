@@ -26,7 +26,7 @@
 *What happended:*
 - *io.js was a fork of Node.js* created by developers who wanted faster updates and improvements. The merger brought io.js's community-driven innovations back into the main Node.js project.
 
-- The actual merger took place in September 2015, resulting in the release of Node.js v4.0. This version combined the best features of both projects, including V8 ES6 support from io.js, and marked the beginning of a Long-Term Support(LTs) release cycle for Node.js.
+- The actual merger took place in September 2015, resulting in the release of Node.js v4.0. This version combined the best features of both projects, including V8 ES6 support from io.js, and marked the beginning of a Long-Term Support(LTS) release cycle for Node.js.
 
 - This ensured faster progress, stability, and a unified ecosystem for developers.
 
