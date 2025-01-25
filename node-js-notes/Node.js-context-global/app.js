@@ -13,3 +13,6 @@ console.log(globalThis.module);  // In Node.js, globalThis is the global object.
 
 console.log(process);
 // module is part of process
+
+// React - components
+// Node - module
