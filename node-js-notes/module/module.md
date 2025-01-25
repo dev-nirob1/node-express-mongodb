@@ -17,3 +17,13 @@
 - This module system came before ES modules was introduced in JavaScript; that's why it's syntax is different.
 - Modules in Node.js are created by defining separate files for different functionalities.
 - You Must export anything you want to make accessible to other module.
+
+
+# **Key Takeways** #
+
+- Avoid mixing module.exports and exports.property incorrectly. If you reassign module.exports, it will override any previous exports.property assignments.
+
+**Use consistent syntax for clarity:**
+
+- Assign everything at once with module.exports = {...}.
+- Or assign properties individually with module.exports.property.
