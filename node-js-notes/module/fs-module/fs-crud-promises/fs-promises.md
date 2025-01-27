@@ -4,6 +4,17 @@
 **Purpose**
 - Simplifies asynchronous file operations by using promises making the code more readable and moder compare to traditional callback-based approaches.
 
+# **Advantages:**#
+- No need for manual callbacks.
+- Cleaner and more intutive asynchronous workflows using async/await.
+- Suitable for modern JavaScript applications.
+
+# **Use Cases** #
+- Reading files asynchronously in a non-blocking way.
+- Writing or Appending data to files withour blocking the event loop.
+- Performing Multiple file Operations sequentially or concurrently promise chaining.
+- Handling Errors Gracefully with .catch() or try..catch() blocks.
+
 
 **Create/Write File => fs.promises.writeFile()**
 - Creates or overwrites a file with specified content.
