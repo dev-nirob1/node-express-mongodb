@@ -1,5 +1,5 @@
-const { resolve } = require("dns");
 const path = require("path")
+
  console.log(__dirname); //(note: __dirname is folder name)
 console.log(__filename); // __filename is the exact file you'r working like path_module.js
 
