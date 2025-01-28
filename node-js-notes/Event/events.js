@@ -9,10 +9,11 @@ emitter.addListener('info', ()=>{
 })
 
 //an event listener(on)
+//best idea to take a single argument as an object
 emitter.on('greet', (data)=> {
     console.log(`Hello ${data.name}, are you a ${data.prof}?`);
 })
 
 //trigger the event(emit)
-emitter.emit('greet', {name: 'Nirob', prof: 'Student'})
+emitter.emit('greet', {name: 'Nirob', prof: 'Student'}) 
 emitter.emit('info')
