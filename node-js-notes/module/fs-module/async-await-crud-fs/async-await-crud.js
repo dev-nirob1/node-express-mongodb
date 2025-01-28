@@ -46,10 +46,9 @@ const directory = __dirname;
 // readFile()
 
 // update file 
-
 // const updateContent = async()=> {
 //     try {
-//         fs.appendFile(filePath, '\n new content', 'utf-8');
+//        await fs.appendFile(filePath, '\n new content', 'utf-8');
 //         console.log('content updated successfully');
 //     } catch (error) {
 //         console.log(error);
@@ -57,9 +56,10 @@ const directory = __dirname;
 // }
 // updateContent();
 
+//delete file
 // const deleteFile = async()=> {
 //     try {
-//         fs.unlink(filePath);
+//        await fs.unlink(filePath);
 //         console.log('folder deleted successfully');
 //     } catch (error) {
 //         console.log(error)
