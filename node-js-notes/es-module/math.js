@@ -18,4 +18,4 @@ const devide = (a, b) => {
 
 // es-module exports 
 // export default sum; //single export 
-export {sum, sub, multiple, devide};
+export {sum, sub, multiple, devide}; //aggregated export
