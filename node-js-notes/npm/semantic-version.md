@@ -32,21 +32,3 @@
 | `x`     | Wildcard for any matching version | `"express": "1.2.x"`       | Any `1.2.x` version |
 | `*`     | Any version available            | `"express": "*"`           | Latest version |
 | `latest`| Always installs the newest       | `"express": "latest"`      | Always the latest version |
-
-# **npm commands** #
-
-- npm install <package-name>@<version>
-    -examples: 
-        - npm install express@4.0.0 // ^4.0.0
-        - npm install express#4.0.0 --save-exact // To exact version.
-        - npm install express#~4.0.0
-        - npm install express@4.2.x
-    - You can use any symbols while specifying version.
-
-- npm outdated
-    - It shows outdated packages in your project.
-    - Current: The version of the package currently installed in your project.
-    - Wanted: The latest version that satisfies the version range defined in your package.json. It basically uses the symbols to get it.
-    - Latest: Absolute latest version of the package.
-    
-- npm remove <package-name>
