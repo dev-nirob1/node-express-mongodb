@@ -6,7 +6,7 @@ graph TD;
     B -->|OS Operation| C[OS Operation];
     B -->|Node.js API| D[Node.js Bindings];
 
-    D -->|Async Request| E[Libuv (Asynchronous I/O)];
+    D -->|Async Request| E[Libuv Asynchronous I/O];
     E --> F[Event Queue];
     F --> G[Event Loop];
 
