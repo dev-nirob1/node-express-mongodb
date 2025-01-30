@@ -49,7 +49,7 @@ console.log('hello world')
     Offloading 
          ⬇
 
-|Thread Pool|
+|Thread Pool|-------|
 |-----------|-------|
 |Thread #1|Thread #2|
 |Thread #3|Thread #4|
@@ -57,3 +57,5 @@ console.log('hello world')
 - Thread pool by default has 4 threads.
 - Event loop, and thread pool are part of 'Libuv' which offloads heavy tasks to thread pool.
 - Heavy tasks include file system, cryptography, compression etc.
+
+
