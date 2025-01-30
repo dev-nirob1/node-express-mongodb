@@ -1,4 +1,3 @@
-const { error } = require('console')
 const fs = require('fs')
 // const fs = require('fs/promises') => to avoid re-writing fs.promises.
 const path = require('path')
