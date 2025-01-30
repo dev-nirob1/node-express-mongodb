@@ -2,7 +2,7 @@
 
 ```mermaid
 graph TD;
-    A[Application] -->|JavaScript| B[V8 (JavaScript Engine)];
+    A[Application] -->|JavaScript| B[V8 JavaScript Engine];
     B -->|OS Operation| C[OS Operation];
     B -->|Node.js API| D[Node.js Bindings];
 
