@@ -6,12 +6,14 @@
 |Each task blocks the next until completed|Uses callbacks, promises, or async/await.|
 
 # Synchronous Code #
-```const data = fs.redFileSync('example.txt', 'utf-8');
+```
+const data = fs.redFileSync('example.txt', 'utf-8');
 console.log('file content:' data);
 ```
 
 # Asynchronous Code #
-```fs.readFile('example.txt', 'utf-8, (err, data)=>{
+```
+fs.readFile('example.txt', 'utf-8, (err, data)=>{
     if(err){
         console.log('Error reading file', err)
         return;
@@ -48,6 +50,7 @@ console.log('hello world')
          ⬇
 
 |Thread Pool|
+|-----------|-------|
 |Thread #1|Thread #2|
 |Thread #3|Thread #4|
 
