@@ -10,7 +10,8 @@ const apiKeys = `560b4b23c7bf0c147de0c6b34f6c4088`;
 
 rl.question('Enter The City Name: ', (cityname)=>{
    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${apiKeys}&units=metric`;
-    let data = ''
+    let data = '';
+    
     https.get(url, (res)=>{
         res.on('data', (chunk)=>{
             data += chunk
