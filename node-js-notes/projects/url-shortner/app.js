@@ -1,41 +1,87 @@
-import { readFile } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
 import { createServer } from 'http';
+import crypto from 'crypto'
 import path from 'path';
 
 const PORT = 5000;
+const DATA_FILE = path.join('data', 'links.json')
 
+const serveFile = async (res, path, contentType) => {
+    try {
+        const data = await readFile((path))
+        res.writeHead(200, { 'Content-Type': contentType });
+        res.end(data)
+    } catch (error) {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end("404 page not found")
+    }
+}
+
+const loadLinks = async () => {
+    try {
+        const data = await readFile(DATA_FILE, 'utf-8');
+        return JSON.parse(data)
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            // 'ENOENT' === error no entry 
+            await writeFile(DATA_FILE, JSON.stringify({}));
+            return {}
+        }
+        throw error;
+    }
+}
+
+const savelinks = async (links) => {
+    return writeFile(DATA_FILE, JSON.stringify(links));
+}
 
 const server = createServer(async (req, res) => {
-    console.log(req.url);
     if (req.method === 'GET') {
         if (req.url === '/') {
-            try {
-                const data = await readFile(path.join('public', 'index.html'))
-                res.writeHead(200, { 'Content-Type': 'text/html' });
-                res.end(data)
-            } catch (error) {
-                res.writeHead(404, { 'Content-Type': 'text/plain' });
-                res.end("404 page not found")
-            }
-        } else if (req.url === '/style.css') {
-            try {
-                const data = await readFile(path.join('public', 'style.css'))
-                res.writeHead(200, { 'content-type': 'text/css' })
-                res.end(data)
+            await serveFile(res, path.join('public', 'index.html'), 'text/html')
 
-            } catch (error) {
-                res.writeHead(404, { 'Content-Type': 'text/plain' });
-                res.end("404 page not found")
-            }
+        } else if (req.url === '/style.css') {
+            await serveFile(res, path.join('public', 'style.css'), 'text/css')
         }
     } else {
-        res.writeHead(404, {'Content-Type': 'text/plain'});
-        res.end('405 Method Not Allowed')
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('404 Not found')
+    }
+
+    if (req.method === 'POST' && req.url === 'shorten') {
+        const links = await loadLinks()
+
+        let body = '';
+        req.on('data', (chunk) => {
+            body += chunk
+        })
+
+        req.on('end', async () => {
+            console.log(body);
+            const { url, shortCode } = JSON.parse(body)
+            console.log(url, shortCode);
+
+            if (!url) {
+                res.writeHead(400, { 'Content-Type': 'text/plain' })
+                return res.end('URL is Required')
+            }
+
+            const finalShortCode = shortCode || crypto.randombytes(4).toString('hex');
+
+            if (links[finalShortCode]) {
+                res.writeHead(400, { 'Content-Type': 'text/plain' })
+                return res.end('Short code already exists. Please choose another')
+            }
+
+            links[finalShortCode] = url;
+            await savelinks(links)
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: true, shortCode: finalShortCode }))
+        })
     }
 
 })
 
 server.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`)
-    console.log('hello world');
 })
