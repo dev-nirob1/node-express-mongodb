@@ -3,17 +3,17 @@ import { createServer } from 'http';
 import crypto from 'crypto'
 import path from 'path';
 
-const PORT = 5000;
+const PORT = 3000;
 const DATA_FILE = path.join('data', 'links.json')
 
 const serveFile = async (res, path, contentType) => {
     try {
         const data = await readFile((path))
         res.writeHead(200, { 'Content-Type': contentType });
-        res.end(data)
+        return res.end(data)
     } catch (error) {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end("404 page not found")
+        return res.end("404 page not found")
     }
 }
 
@@ -32,23 +32,25 @@ const loadLinks = async () => {
 }
 
 const savelinks = async (links) => {
-    return writeFile(DATA_FILE, JSON.stringify(links));
+    return await writeFile(DATA_FILE, JSON.stringify(links));
 }
 
 const server = createServer(async (req, res) => {
     if (req.method === 'GET') {
         if (req.url === '/') {
-            await serveFile(res, path.join('public', 'index.html'), 'text/html')
+            return await serveFile(res, path.join('public', 'index.html'), 'text/html')
 
         } else if (req.url === '/style.css') {
-            await serveFile(res, path.join('public', 'style.css'), 'text/css')
+            return await serveFile(res, path.join('public', 'style.css'), 'text/css')
         }
-    } else {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('404 Not found')
+        else if (req.url === '/links') {
+            const links = await loadLinks()
+            res.writeHead(200, { 'Content-Type': 'application/json' })
+            return res.end(JSON.stringify(links))
+        }
     }
 
-    if (req.method === 'POST' && req.url === 'shorten') {
+    if (req.method === 'POST' && req.url === '/shorten') {
         const links = await loadLinks()
 
         let body = '';
@@ -57,16 +59,14 @@ const server = createServer(async (req, res) => {
         })
 
         req.on('end', async () => {
-            console.log(body);
             const { url, shortCode } = JSON.parse(body)
-            console.log(url, shortCode);
 
             if (!url) {
                 res.writeHead(400, { 'Content-Type': 'text/plain' })
                 return res.end('URL is Required')
             }
 
-            const finalShortCode = shortCode || crypto.randombytes(4).toString('hex');
+            const finalShortCode = shortCode || crypto.randomBytes(4).toString('hex');
 
             if (links[finalShortCode]) {
                 res.writeHead(400, { 'Content-Type': 'text/plain' })
@@ -76,10 +76,13 @@ const server = createServer(async (req, res) => {
             links[finalShortCode] = url;
             await savelinks(links)
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: true, shortCode: finalShortCode }))
+            return res.end(JSON.stringify({ success: true, shortCode: finalShortCode }))
         })
     }
-
+    else {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('404 Not found')
+    }
 })
 
 server.listen(PORT, () => {
