@@ -11,6 +11,11 @@ app  => This varibale holds the created express app, which you can use to:
  * Start the server (app.listen())
 */
 
+//use absoulte path is good practice 
+const staticPath = path.join(import.meta.dirname, 'public')
+// to serve static file 
+app.use(express.static(staticPath))
+
 app.get('/', async (req, res) => {
     // console.log('pathname',import.meta.dirname);
     // console.log('filename',import.meta.url);
