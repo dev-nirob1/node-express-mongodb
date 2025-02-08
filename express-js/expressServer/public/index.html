@@ -1,17 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello Express</title>
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Hello Express</h1>
-    <p>
-        you are beautiful the way you are. Keep doing good work
-    </p>
+        <p>
+            you are beautiful the way you are. Keep doing good work
+        </p>
+        
+    <div>
+        <h1>Contact</h1>
+        <!-- by default form tag sends GET request to the action. It will send as query parameters -->
+        <form action="/contact" method="post">
+            <div>
+                <label for="name">Name</label>
+                <!-- <input type="text" name="name" id="name"> -->
+                <input type="text" name="user[name]" id="name">
+            </div>
+            <div>
+                <label for="message">Message</label>
+                <!-- <textarea name="message" id="message" placeholder="Write your message"></textarea> -->
+                <textarea name="user[message]" id="message" placeholder="Write your message"></textarea>
+
+            </div>
+            <input type="submit" value="submit">
+        </form>
     </div>
+    </div>
+
 </body>
+
 </html>
