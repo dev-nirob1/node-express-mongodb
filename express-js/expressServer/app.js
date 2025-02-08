@@ -15,7 +15,7 @@ app  => This varibale holds the created express app, which you can use to:
 const staticPath = path.join(import.meta.dirname, 'public')
 // to serve static file 
 app.use(express.static(staticPath));
-app.use(express.urlencoded({extended: true})) //to parse formdata for post method for nesting property
+app.use(express.urlencoded({ extended: true }))//!important middleware //to parse formdata for post method for nesting property
 // app.use(express.urlencoded()) //to parse formdata for post method
 
 // console.log(__dirname)
@@ -43,9 +43,14 @@ app.get('/about', async (req, res) => {
 //     res.redirect('/')
 // })
 
-app.post('/contact', (req, res)=>{
+app.post('/contact', (req, res) => {
     console.log(req.body)
     res.redirect('/')
+})
+
+app.use((req, res) => {
+    //    return res.status(404).send('Page Not Found');
+    return res.status(404).sendFile(path.join(import.meta.dirname, 'views', "404.html"))
 })
 
 app.listen(PORT, () => {
